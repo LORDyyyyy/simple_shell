@@ -1,1 +1,1 @@
-Simple sell project group
+simple shell project group
