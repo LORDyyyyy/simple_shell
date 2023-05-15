@@ -1,7 +1,11 @@
 
 Check memory leak command:
 
-valgrind --leak-check=full --track-origins=yes ./my_program
+valgrind --leak-check=full --track-origins=yes ./a.out
+
+valgrind -s --leak-check=full --show-leak-kinds=all ./a.out
+
+valgrind -s ./a.out
 
 Compilation command:
 
@@ -9,11 +13,15 @@ gcc -Wall -Werror -Wextra -pedantic -std=gnu89 *.c -o hsh
 
 gcc -Wall -Werror -Wextra -pedantic -std=gnu89 *.c
 
+gcc *.c
 
-1. in main.c, 
+
+1. in main.c,  DONE
 	in the very end in shell_loop func, 
 	free data->cmd, 
 	which is a string array
 
-2. fix memory leak.
+2. fix memory leak. DONE
+
+3. fix whitespaces as input with the get_location function.
 
