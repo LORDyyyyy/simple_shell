@@ -14,19 +14,13 @@ int main(int ac, char **av, char **env)
 	(void)ac;
 	(void)av;
 
+	signal(SIGINT, &handle_sig);
+
 	data_t data_struct = {NULL}, *data = &data_struct;
 
 	init_data(data, ac, av, env);
 
 	shell_loop(data, ac, av, env);
-
-	/*
-	 *
-	 * writestr(data->get_cmd);
-	 * writechar(10);
-	 *
-	 *
-	 */
 
 	writechar(BUF_FLUSH);
 	return (0);
@@ -42,16 +36,25 @@ int main(int ac, char **av, char **env)
 void init_data(data_t *data, int ac, char **av, char **env)
 {
 	(void)ac;
-	(void)av;
-	int i;
 
+	int i, envc = 0;
+
+	data->run_cmd = NULL;
 	data->get_cmd = NULL;
 	data->cmd = NULL;
-	/*
+	data->env = NULL;
+	data->prog_name = av[0];	
+	
 	if (env)
-		for ( i = 0; env[i]; i++)
-			_strcpy(data->env[i], env[i]);
-	data->env[i] = NULL;*/
+	{
+		while (env[envc])
+			envc++;
+		data->env = malloc(sizeof(char *) * (envc + 1));
+
+		for (i = 0; env[i]; i++)
+			data->env[i] = full_strdup(env[i]);
+		data->env[i] = NULL;
+	}
 }
 
 /**
@@ -65,6 +68,7 @@ char *clear_getline(char *str)
 	size_t last = strlen(str) - 1;
 
 	str[last] = str[last] == 10 ? '\0' : str[last];
+
 	return (str);
 }
 
@@ -78,60 +82,56 @@ char *clear_getline(char *str)
  */
 void shell_loop(data_t *data, int ac, char **av, char **env)
 {
-	int error_code = 0, i;
+	int error_code = 0, i, cmd_len;
 	size_t BUF = 1024;
-	char *command;
 
 	while (1)
 	{
 		if (isatty(STDIN_FILENO))
-			writestr("$ ");
-		writechar(BUF_FLUSH);
-
-		error_code = getline(&data->get_cmd, &BUF, stdin);
-
-		if (error_code == -1)
+			writestr(SHELL_MSG);
+		
+		error_code = getline(&data->get_cmd, &BUF, stdin);	
+		if (error_code == -1 ||  error_code == EOF)
 		{
-			free(data->cmd);
-			free(data->get_cmd);
-			exit(EXIT_FAILURE);
+			free_data(data);
+			exit(1);
 		}
-
-		data->get_cmd = clear_getline(data->get_cmd);
-
-		//writestr(data->get_cmd);
-		//writechar(10);
-		//writechar(BUF_FLUSH);
+		clear_getline(data->get_cmd);
+		cmd_len = _strlen(data->get_cmd);
 		
 		if (!(_strcmp(data->get_cmd, "exit")))
-			exit(error_code);
-
-		filter_cmd(data);
-		
-		
-		command = get_location(data->cmd[0]);
-
-		if(!command)
-			break;
-		
-		free(data->cmd[0]);
-		data->cmd[0] = malloc(sizeof(char) * _strlen(command));
-
-		data->cmd[0] = _strdup(command);
-
-		
-		i = 0;
-		while (data->cmd[i])
 		{
-			writestr(data->cmd[i]);
-			writechar(' ');
+			free_data(data);
 			writechar(BUF_FLUSH);
-			free(data->cmd[i]);
-			i++;
+			exit(1);
 		}
-		writechar(10);
+		filter_cmd(data);
 
-		//free(command);
+		get_location(data);		
+		printf("location: .%s.\n", data->run_cmd);
+		if (cmd_len >= 1)
+		{
+			i = 0;
+			while (data->cmd[i])
+			{
+				writestr(data->cmd[i]);
+				writechar(10);
+				writechar(BUF_FLUSH);
+				i++;
+			}
+			free_used_data(data);
+		}	
 	}
-	free_data(data);
+	writechar(BUF_FLUSH);
+}
+
+/**
+ * handle_sig - check is there is CTRL C entered
+ * @sig: signal code
+ *
+ */
+void handle_sig(int sig)
+{
+        writechar(10);
+        writestr(SHELL_MSG);
 }

@@ -8,6 +8,13 @@
  */
 int writechar(int c)
 {
+	if (c != -1)
+		return (write(STDOUT_FILENO,&c, 1));
+	return 0;
+}
+/*
+int writechar(int c)
+{
 	static int i;
 	static char buf[BUF_SIZE];
 
@@ -20,7 +27,7 @@ int writechar(int c)
 	if (c != BUF_FLUSH)
 		buf[i++] = c;
 	return (1);
-}
+}*/
 
 /**
  * writestr - prints a string
@@ -47,9 +54,9 @@ int writestr(char *str)
  *
  * Return: s length
  */
-int _strlen(char *s)
+size_t _strlen(char *s)
 {
-	int len = 0;
+	size_t len = 0;
 
 	while (s[len])
 		len++;

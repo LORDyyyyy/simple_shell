@@ -8,45 +8,29 @@
  */
 void filter_cmd(data_t *data)
 {
-	/* char *my_av[] = {NULL}; */
-	int  i, j, tokens_count = 0;
-	char *token;
-	char *get_cmd_cpy;
-	const char *delim = " ";
+	char *delimiter = " \t";
+	int i, j, counter = 2;
 
 
-	get_cmd_cpy = _strdup(data->get_cmd);
-
-
-	token = strtok(get_cmd_cpy, delim);
-	while (token)
+	for (i = 0; data->get_cmd[i]; i++)
+		for (j = 0; delimiter[j]; j++)
+			if (data->get_cmd[i] == delimiter[j])
+				counter++;
+	
+	data->cmd = malloc(counter * sizeof(char *));
+	if (data->cmd == NULL)
 	{
-		tokens_count++;
-		token = strtok(NULL, delim);
+		perror(data->prog_name);
+		exit(errno);
 	}
-	tokens_count++;
-
-	free(get_cmd_cpy);
-	get_cmd_cpy = _strdup(data->get_cmd);
-
-	data->cmd = malloc(sizeof(char *) * tokens_count);
-
-	token = strtok(get_cmd_cpy, delim);
 
 	i = 0;
-	while (token)
-	{
-		data->cmd[i] = malloc(sizeof(char) * _strlen(token));
 
-		_strcpy(data->cmd[i], token);
-		token = strtok(NULL, delim);
-		i++;
-	}
-	data->cmd[i] = NULL;
-	
-	free(get_cmd_cpy);
+	data->cmd[i] = full_strdup(strtok(data->get_cmd, delimiter));
+
+	while (data->cmd[i++])
+		data->cmd[i] = full_strdup(strtok(NULL, delimiter));
 }
-
 
 /**
  * get_location - after filtering the inputed string,
@@ -54,59 +38,51 @@ void filter_cmd(data_t *data)
  * now we want the first command "ls" to be included with 
  * the command path, like "usr/bin/ls"
  *
- * @cmd: the commaned which will be taken from data->cmd
+ * @data: data_t struct holds the commands
  *
  * Return: full command with path or null if DNE
  */
-char *get_location(char *cmd)
+char *get_location(data_t *data)
 {
 	char *path, *path_copy, *path_token, *file_path;
-	int cmd_len;
-	int dir_len;
+	int cmd_len, dir_len;
 	struct stat sfile;
 
 	path = getenv("PATH");
-
 	if (path)
 	{
-		path_copy = _strdup(path);
-
-		cmd_len = _strlen(cmd);
-
+		path_copy = full_strdup(path);
+		cmd_len = _strlen(data->cmd[0]);
 		path_token = strtok(path_copy, ":");
 		while(path_token)
 		{
 			dir_len = _strlen(path_token);
 			file_path = malloc(cmd_len + dir_len + 2);
-			
+			if (file_path == NULL)
+			{
+				perror(data->prog_name);
+				exit(errno);
+			}
 			_strcpy(file_path, path_token);
 			_strcat(file_path, "/");
-			_strcat(file_path, cmd);
+			_strcat(file_path, data->cmd[0]);
 			_strcat(file_path, "\0");
-
 			if (stat(file_path, &sfile) == 0)
 			{
 				free(path_copy);
-				return (file_path);
+				data->run_cmd = full_strdup(file_path);
+				free(file_path);
+				return (data->cmd[0]);
 			}
-
 			free(file_path);
 			path_token = strtok(NULL, ":");
 		}
-
 		free(path_copy);
-
-		if (stat(cmd, &sfile) == 0)
-			return (cmd);
-		
-		return (NULL);
+		if (stat(data->cmd[0], &sfile) == 0)
+			return (data->run_cmd = full_strdup(data->cmd[0]));
 	}
-	
 	return (NULL);
 }
-
-
-
 
 
 

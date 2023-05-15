@@ -49,21 +49,35 @@ char *_strncpy(char *dest, char *src, int n)
  *
  * Return: Always 0.
  */
-char *_strcat(char *dest, char *src)
+char *full_strcat(char *string1, char *string2)
 {
-	int i, dest_len = 0;
+	char *result;
+	int len1 = 0, len2 = 0;
 
-	while (dest[dest_len])
-		dest_len++;
+	if (!string1)
+		string1 = "";
+	len1 = _strlen(string1);
 
-	for (i = 0; src[i]; i++, dest_len++)
-		dest[dest_len] = src[i];
+	if (!string2)
+		string2 = "";
+	len2 = _strlen(string2);
 
-	dest[dest_len++] = '\0';
+	result = malloc(sizeof(char) * (len1 + len2 + 1));
 
-	return (dest);
+	for (len1 = 0; string1[len1]; len1++)
+		result[len1] = string1[len1];
+	
+	free(string1);
+
+	for (len2 = 0; string2[len2] != '\0'; len2++)
+	{
+		result[len1] = string2[len2];
+		len1++;
+	}
+
+	result[len1] = '\0';
+	return (result);
 }
-
 /**
  * _strcmp -  compares two strings
  * @s1: first string
@@ -86,24 +100,21 @@ int _strcmp(char *s1, char *s2)
  *
  * Return: a new copy of str
  */
-char *_strdup(char *str)
+char *full_strdup(char *string)
 {
-	int i, size = 0;
-	char *arr;
+	char *result;
+	int length, i;
 
-	if (!str)
+	if (!string)
 		return (NULL);
-	
-	while (str[size])
-		size++;
-	
-	arr = malloc(size * sizeof(*str) + 1);
 
-	if (!arr)
-		return (NULL);
-	
-	for (i = 0; str[i]; i++)
-		arr[i] = str[i];
-	
-	return (arr);
+	length = _strlen(string) + 1;
+
+	result = malloc(sizeof(char) * length);
+
+	for (i = 0; i < length ; i++)
+		result[i] = string[i];
+
+	return (result);
 }
+
