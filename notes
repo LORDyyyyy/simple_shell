@@ -1,9 +1,19 @@
 
+Check memory leak command:
+
+valgrind --leak-check=full --track-origins=yes ./my_program
+
+Compilation command:
+
+gcc -Wall -Werror -Wextra -pedantic -std=gnu89 *.c -o hsh
+
+gcc -Wall -Werror -Wextra -pedantic -std=gnu89 *.c
+
 
 1. in main.c, 
 	in the very end in shell_loop func, 
 	free data->cmd, 
 	which is a string array
 
-2. fix memory leak.2. fix memory leak.
+2. fix memory leak.
 
