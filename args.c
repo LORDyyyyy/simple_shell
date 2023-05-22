@@ -23,5 +23,5 @@ void args(data_t *data, int ac, char **av)
 		data->cmd[i - 1] = full_strdup(av[i]);
 
 	}
-	data->cmd[i] = NULL;
+	data->cmd[i - 1] = NULL;
 }
