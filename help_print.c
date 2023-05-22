@@ -9,25 +9,9 @@
 int writechar(int c)
 {
 	if (c != -1)
-		return (write(STDOUT_FILENO,&c, 1));
-	return 0;
+		return (write(STDOUT_FILENO, &c, 1));
+	return (0);
 }
-/*
-int writechar(int c)
-{
-	static int i;
-	static char buf[BUF_SIZE];
-
-	if (c == BUF_FLUSH || i >= BUF_SIZE)
-	{
-		write(STDOUT_FILENO, buf, i);
-		i = 0;
-	}
-
-	if (c != BUF_FLUSH)
-		buf[i++] = c;
-	return (1);
-}*/
 
 /**
  * writestr - prints a string
