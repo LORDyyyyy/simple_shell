@@ -1,5 +1,9 @@
 #include "shell.h"
-
+/**
+ * free_used_data - to avoid leake memory
+ * @data: data_t struct holds commands
+ *
+ */
 void free_used_data(data_t *data)
 {
 	if (data->get_cmd)
@@ -8,7 +12,7 @@ void free_used_data(data_t *data)
 		free_grid_char(data->cmd);
 	if (data->run_cmd)
 		free(data->run_cmd);
-	
+
 	data->run_cmd = NULL;
 	data->cmd = NULL;
 	data->get_cmd = NULL;

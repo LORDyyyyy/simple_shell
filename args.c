@@ -11,7 +11,8 @@
 void args(data_t *data, int ac, char **av)
 {
 	int acc = ac, i;
-	data->cmd = malloc (sizeof(char *) * (ac));
+
+	data->cmd = malloc(sizeof(char *) * (ac));
 
 	if (data->cmd == NULL)
 	{
