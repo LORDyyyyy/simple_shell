@@ -68,9 +68,17 @@ void filter_cmd(data_t *data);
 /*		get command location	 	*/
 char *get_location(data_t *data);
 
-/*		end execute.c			*/
+/*		end paths.c			*/
 /*----------------------------------------------*/
 
+
+/*----------------------------------------------*/
+/*		start args.c			*/
+
+args(data_t *data, int ac, char **av);
+
+/*		end args.c			*/
+/*----------------------------------------------*/
 
 
 
@@ -91,7 +99,6 @@ char *_strdup(char *str);
 
 /*		end help_string.c		*/
 /*----------------------------------------------*/
-
 
 
 

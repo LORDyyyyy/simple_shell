@@ -84,28 +84,36 @@ void shell_loop(data_t *data, int ac, char **av, char **env)
 {
 	int error_code = 0, i, cmd_len;
 	size_t BUF = 1024;
+	int acc = ac;
 
 	while (1)
 	{
 		if (isatty(STDIN_FILENO))
 			writestr(SHELL_MSG);
 		
-		error_code = getline(&data->get_cmd, &BUF, stdin);	
-		if (error_code == -1 ||  error_code == EOF)
+		if (acc == 1)
 		{
-			free_data(data);
-			exit(1);
+			error_code = getline(&data->get_cmd, &BUF, stdin);	
+			if (error_code == -1 ||  error_code == EOF)
+			{
+				free_data(data);
+				exit(1);
+			}
+			clear_getline(data->get_cmd);
+			cmd_len = _strlen(data->get_cmd);
+			
+			if (!(_strcmp(data->get_cmd, "exit")))
+			{
+				free_data(data);
+				writechar(BUF_FLUSH);
+				exit(1);
+			}
+			filter_cmd(data);
 		}
-		clear_getline(data->get_cmd);
-		cmd_len = _strlen(data->get_cmd);
-		
-		if (!(_strcmp(data->get_cmd, "exit")))
-		{
-			free_data(data);
-			writechar(BUF_FLUSH);
-			exit(1);
-		}
-		filter_cmd(data);
+		else
+			args(data, acc, av);
+
+		acc = 1;
 
 		get_location(data);		
 		printf("location: .%s.\n", data->run_cmd);
