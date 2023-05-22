@@ -27,11 +27,12 @@
  * @run_cmd: cmd[0]
  * @prog_name: argv[0]
  * @env: environment variables
+ * @cmd_count: how many commands entered
  *
  */
 typedef struct programData
 {
-
+	int cmd_count;
 	char *get_cmd;
 	char **cmd;
 	char *run_cmd;
@@ -82,6 +83,7 @@ char *get_location(data_t *data);
 /*----------------------------------------------*/
 /*		start args.c			*/
 
+/*		handle arguments if exist	*/
 void args(data_t *data, int ac, char **av);
 
 /*		end args.c			*/
@@ -90,6 +92,15 @@ void args(data_t *data, int ac, char **av);
 
 
 
+
+/*----------------------------------------------*/
+/*		start exe.c			*/
+
+/*		run the program			*/
+void exe(data_t *data);
+
+/*		end exe.c			*/
+/*----------------------------------------------*/
 
 
 
@@ -121,6 +132,7 @@ char *_strdup(char *str);
 int writechar(int c);
 int writestr(char *str);
 size_t _strlen(char *s);
+void print_number(int n);
 
 /*		end help_print.c		*/
 /*----------------------------------------------*/
