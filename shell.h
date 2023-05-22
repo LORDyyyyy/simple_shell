@@ -23,7 +23,10 @@
  * passed arguments
  *
  * @get_cmd: inputed command from getline()
- * @cmd: full command with "/bin/"
+ * @cmd: full command with list, example: ["/usr/bin/ls", "-vla", "/tmp", NULL]
+ * @run_cmd: cmd[0]
+ * @prog_name: argv[0]
+ * @env: environment variables
  *
  */
 typedef struct programData
@@ -65,7 +68,7 @@ void handle_sig(int sig);
 /*		filtering the command		*/
 void filter_cmd(data_t *data);
 
-/*		get command location	 	*/
+/*		get command location		*/
 char *get_location(data_t *data);
 
 /*		end paths.c			*/
@@ -93,7 +96,7 @@ char *_strcat(char *dest, char *src);
 int _strcmp(char *s1, char *s2);
 char *full_strdup(char *str);
 
-/* 		start help_strint_2.c		*/
+/*		start help_strint_2.c		*/
 char *_strcpy(char *dest, char *src);
 char *_strdup(char *str);
 
