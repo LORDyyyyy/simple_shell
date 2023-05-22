@@ -100,7 +100,7 @@ void shell_loop(data_t *data, int ac, char **av, char **env)
 				exit(1);
 			}
 			clear_getline(data->get_cmd);
-			cmd_len = _strlen(data->get_cmd);
+			//cmd_len = _strlen(data->get_cmd);
 			
 			if (!(_strcmp(data->get_cmd, "exit")))
 			{
@@ -111,12 +111,18 @@ void shell_loop(data_t *data, int ac, char **av, char **env)
 			filter_cmd(data);
 		}
 		else
-			args(data, acc, av);
+		{
+			//printf("before, av[1] = .%s.\n", av[1]);
+			args(data, ac, av);
+			//printf("after, av[1] = .%s.\n", av[1]);
+			//printf("after, data->cmd[0] = .%s.\n", data->cmd[0]);
+		}
 
 		acc = 1;
 
 		get_location(data);		
 		printf("location: .%s.\n", data->run_cmd);
+		cmd_len = _strlen(data->cmd[0]);
 		if (cmd_len >= 1)
 		{
 			i = 0;
