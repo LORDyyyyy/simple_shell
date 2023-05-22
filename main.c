@@ -43,8 +43,8 @@ void init_data(data_t *data, int ac, char **av, char **env)
 	data->get_cmd = NULL;
 	data->cmd = NULL;
 	data->env = NULL;
-	data->prog_name = av[0];	
-	
+	data->prog_name = av[0];
+
 	if (env)
 	{
 		while (env[envc])
@@ -90,18 +90,17 @@ void shell_loop(data_t *data, int ac, char **av, char **env)
 	{
 		if (isatty(STDIN_FILENO))
 			writestr(SHELL_MSG);
-		
+
 		if (acc == 1)
 		{
-			error_code = getline(&data->get_cmd, &BUF, stdin);	
+			error_code = getline(&data->get_cmd, &BUF, stdin);
 			if (error_code == -1 ||  error_code == EOF)
 			{
 				free_data(data);
 				exit(1);
 			}
-			clear_getline(data->get_cmd);
-			//cmd_len = _strlen(data->get_cmd);
-			
+			clear_getline(data->get_cmd);/*cmd_len = _strlen(data->get_cmd);*/
+
 			if (!(_strcmp(data->get_cmd, "exit")))
 			{
 				free_data(data);
@@ -120,7 +119,7 @@ void shell_loop(data_t *data, int ac, char **av, char **env)
 
 		acc = 1;
 
-		get_location(data);		
+		get_location(data);
 		printf("location: .%s.\n", data->run_cmd);
 		cmd_len = _strlen(data->cmd[0]);
 		if (cmd_len >= 1)
@@ -134,7 +133,7 @@ void shell_loop(data_t *data, int ac, char **av, char **env)
 				i++;
 			}
 			free_used_data(data);
-		}	
+		}
 	}
 	writechar(BUF_FLUSH);
 }
@@ -146,6 +145,6 @@ void shell_loop(data_t *data, int ac, char **av, char **env)
  */
 void handle_sig(int sig)
 {
-        writechar(10);
-        writestr(SHELL_MSG);
+	writechar(10);
+	writestr(SHELL_MSG);
 }
