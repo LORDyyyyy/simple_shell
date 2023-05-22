@@ -20,7 +20,7 @@ void args(data_t *data, int ac, char **av)
 	}
 	for (i = 1; i < acc; i++)
 	{
-		data->cmd[i] = full_strdup(av[i]);
+		data->cmd[i - 1] = full_strdup(av[i]);
 
 	}
 	data->cmd[i] = NULL;
