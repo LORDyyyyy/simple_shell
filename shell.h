@@ -75,7 +75,7 @@ char *get_location(data_t *data);
 /*----------------------------------------------*/
 /*		start args.c			*/
 
-args(data_t *data, int ac, char **av);
+void args(data_t *data, int ac, char **av);
 
 /*		end args.c			*/
 /*----------------------------------------------*/
