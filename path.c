@@ -3,7 +3,7 @@
 /**
  * filter_cmd - we have data->get_cmd as a full command now
  * we will seperate the spaces and put it as a list in data->cmd
- * 
+ *
  * @data: data_t struct that holds the commands
  */
 void filter_cmd(data_t *data)
@@ -16,7 +16,7 @@ void filter_cmd(data_t *data)
 		for (j = 0; delimiter[j]; j++)
 			if (data->get_cmd[i] == delimiter[j])
 				counter++;
-	
+
 	data->cmd = malloc(counter * sizeof(char *));
 	if (data->cmd == NULL)
 	{
@@ -35,7 +35,7 @@ void filter_cmd(data_t *data)
 /**
  * get_location - after filtering the inputed string,
  * an example of data->cmd : {"ls", "-l", "/tmp", NULL}
- * now we want the first command "ls" to be included with 
+ * now we want the first command "ls" to be included with
  * the command path, like "usr/bin/ls"
  *
  * @data: data_t struct holds the commands
@@ -54,7 +54,7 @@ char *get_location(data_t *data)
 		path_copy = full_strdup(path);
 		cmd_len = _strlen(data->cmd[0]);
 		path_token = strtok(path_copy, ":");
-		while(path_token)
+		while (path_token)
 		{
 			dir_len = _strlen(path_token);
 			file_path = malloc(cmd_len + dir_len + 2);
