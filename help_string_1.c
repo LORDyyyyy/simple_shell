@@ -43,9 +43,9 @@ char *_strncpy(char *dest, char *src, int n)
 }
 
 /**
- * _strcat -  concatenates two strings
- * @dest: first string
- * @src: second string
+ * full_strcat -  concatenates two strings
+ * @string1: first string
+ * @string2: second string
  *
  * Return: Always 0.
  */
@@ -66,7 +66,7 @@ char *full_strcat(char *string1, char *string2)
 
 	for (len1 = 0; string1[len1]; len1++)
 		result[len1] = string1[len1];
-	
+
 	free(string1);
 
 	for (len2 = 0; string2[len2] != '\0'; len2++)
@@ -95,8 +95,8 @@ int _strcmp(char *s1, char *s2)
 }
 
 /**
- * _strdup - copies a string
- * @str: the string
+ * full_strdup - copies a string
+ * @string: the string
  *
  * Return: a new copy of str
  */
