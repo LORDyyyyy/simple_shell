@@ -31,6 +31,7 @@ int main(int ac, char **av, char **env)
  * @data: data_t struct holds commands
  * @av: passed argument
  * @ac: av counter
+ * @env: env list
  *
  */
 void init_data(data_t *data, int ac, char **av, char **env)
@@ -79,7 +80,6 @@ char *clear_getline(char *str)
  * @data: data_t struct holds commands
  * @av: passed argument
  * @ac: av counter
- * @env: enviroment list
  *
  */
 void shell_loop(data_t *data, int ac, char **av)
@@ -92,7 +92,6 @@ void shell_loop(data_t *data, int ac, char **av)
 	{
 		if (isatty(STDIN_FILENO))
 			writestr(SHELL_MSG);
-
 		if (acc == 1)
 		{
 			error_code = getline(&data->get_cmd, &BUF, stdin);
@@ -102,7 +101,6 @@ void shell_loop(data_t *data, int ac, char **av)
 				exit(1);
 			}
 			clear_getline(data->get_cmd);
-
 			if (!(_strcmp(data->get_cmd, "exit")))
 			{
 				free_data(data);
@@ -112,33 +110,15 @@ void shell_loop(data_t *data, int ac, char **av)
 			filter_cmd(data);
 		}
 		else
-		{
 			args(data, ac, av);
-		}
-
 		acc = 1;
 
 		get_location(data);
 		cmd_len = _strlen(data->cmd[0]);
 
-		/*printf("----------------------\n");*/
 		exe(data);
-		/*printf("----------------------\n");*/
-
 		if (cmd_len >= 1)
 		{
-			/*
-			 * int i;
-			 *
-			 * i = 0;
-			while (data->cmd[i])
-			{
-				writestr(data->cmd[i]);
-				writechar(10);
-				writechar(BUF_FLUSH);
-				i++;
-			}
-			*/
 			free_used_data(data);
 		}
 		data->cmd_count++;
