@@ -15,7 +15,7 @@
 
 #define BUF_SIZE	1024
 #define BUF_FLUSH	-1
-#define SHELL_MSG	"$ "
+#define SHELL_MSG	"#cisfun$ "
 
 
 /**
