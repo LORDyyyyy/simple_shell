@@ -51,7 +51,7 @@ void init_data(data_t *data, int ac, char **av, char **env);
 char *clear_getline(char *str);
 
 /*		start the loop			*/
-void shell_loop(data_t *data, int ac, char **av, char **env);
+void shell_loop(data_t *data, int ac, char **av);
 
 /*		handle CTRL C			*/
 void handle_sig(int sig);

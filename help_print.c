@@ -66,9 +66,9 @@ void print_number(int n)
 		writechar(48);
 	for (i = 1; i <= n; i *= 10)
 		dig = 0;
-	
+
 	i /= 10;
-	
+
 	for (; i > 0; i /= 10)
 	{
 		dig = (n / i) % 10;

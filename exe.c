@@ -11,6 +11,9 @@
 
 void exe(data_t *data)
 {
+	pid_t id;
+	int exec_id;
+
 	if (data->run_cmd == NULL)
 	{
 		writestr(data->prog_name);
@@ -22,9 +25,8 @@ void exe(data_t *data)
 		writestr("not found\n");
 		return;
 	}
-	pid_t id = fork();
-	int exec_id;
 
+	id = fork();
 	if (id == -1)
 	{
 		perror(data->prog_name);

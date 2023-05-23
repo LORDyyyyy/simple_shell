@@ -11,16 +11,16 @@
  */
 int main(int ac, char **av, char **env)
 {
+	data_t data_struct, *data = &data_struct;
+
 	(void)ac;
 	(void)av;
 
 	signal(SIGINT, &handle_sig);
 
-	data_t data_struct, *data = &data_struct;
-
 	init_data(data, ac, av, env);
 
-	shell_loop(data, ac, av, env);
+	shell_loop(data, ac, av);
 
 	writechar(BUF_FLUSH);
 	return (0);
@@ -35,10 +35,10 @@ int main(int ac, char **av, char **env)
  */
 void init_data(data_t *data, int ac, char **av, char **env)
 {
+	int envc, i;
+
 	(void)ac;
 
-	int i, envc = 0;
-	
 	data->cmd_count = 0;
 	data->run_cmd = NULL;
 	data->get_cmd = NULL;
@@ -48,6 +48,7 @@ void init_data(data_t *data, int ac, char **av, char **env)
 
 	if (env)
 	{
+		envc = 0;
 		while (env[envc])
 			envc++;
 		data->env = malloc(sizeof(char *) * (envc + 1));
@@ -81,9 +82,9 @@ char *clear_getline(char *str)
  * @env: enviroment list
  *
  */
-void shell_loop(data_t *data, int ac, char **av, char **env)
+void shell_loop(data_t *data, int ac, char **av)
 {
-	int error_code = 0, i, cmd_len;
+	int error_code = 0, cmd_len;
 	size_t BUF = 1024;
 	int acc = ac;
 
@@ -119,24 +120,28 @@ void shell_loop(data_t *data, int ac, char **av, char **env)
 
 		get_location(data);
 		cmd_len = _strlen(data->cmd[0]);
-		
-		printf("----------------------\n");
+
+		/*printf("----------------------\n");*/
 		exe(data);
-		printf("----------------------\n");
+		/*printf("----------------------\n");*/
 
 		if (cmd_len >= 1)
 		{
-			/*i = 0;
+			/*
+			 * int i;
+			 *
+			 * i = 0;
 			while (data->cmd[i])
 			{
 				writestr(data->cmd[i]);
 				writechar(10);
 				writechar(BUF_FLUSH);
 				i++;
-			}*/
+			}
+			*/
 			free_used_data(data);
 		}
-		data->cmd_count ++;
+		data->cmd_count++;
 	}
 	writechar(BUF_FLUSH);
 }
@@ -148,6 +153,8 @@ void shell_loop(data_t *data, int ac, char **av, char **env)
  */
 void handle_sig(int sig)
 {
+	(void)sig;
+
 	writechar(10);
 	writestr(SHELL_MSG);
 }
