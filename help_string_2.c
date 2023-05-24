@@ -79,3 +79,28 @@ int _strncmp(char *string1, char *string2, int number)
 	}
 	return (1);
 }
+
+/**
+ * check_space - check is the string is only strings or not
+ * @str: strting to check
+ *
+ * Return: 1 if spaces only, 0 otherwise
+ *
+ */
+int check_space(char *str)
+{
+	char *spaces = " \r\n\t";
+	int i, j;
+	size_t len = 0;
+
+	if (str == NULL)
+		return (0);
+
+	for (i = 0; str[i]; i++)
+		for (j = 0; spaces[j]; j++)
+			if (str[i] == spaces[j])
+				len++;
+
+	return (len == _strlen(str) ? 1 : 0);
+}
+

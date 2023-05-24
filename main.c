@@ -107,6 +107,11 @@ void shell_loop(data_t *data, int ac, char **av)
 				writechar(BUF_FLUSH);
 				exit(1);
 			}
+			if (check_space(data->get_cmd))
+			{
+				free_used_data(data);
+				continue;
+			}
 			filter_cmd(data);
 		}
 		else
