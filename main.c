@@ -40,7 +40,7 @@ void init_data(data_t *data, int ac, char **av, char **env)
 
 	(void)ac;
 
-	data->cmd_count = 0;
+	data->cmd_count = 1;
 	data->run_cmd = NULL;
 	data->get_cmd = NULL;
 	data->cmd = NULL;
