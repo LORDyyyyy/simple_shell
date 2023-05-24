@@ -27,8 +27,6 @@ void free_data(data_t *data)
 {
 	free_used_data(data);
 	free_grid_char(data->env);
-
-	writechar(BUF_FLUSH);
 }
 
 /**

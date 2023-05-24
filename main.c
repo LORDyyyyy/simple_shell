@@ -68,7 +68,7 @@ void init_data(data_t *data, int ac, char **av, char **env)
  */
 char *clear_getline(char *str)
 {
-	size_t last = strlen(str) - 1;
+	size_t last = _strlen(str) - 1;
 
 	str[last] = str[last] == 10 ? '\0' : str[last];
 
