@@ -119,7 +119,7 @@ void shell_loop(data_t *data, int ac, char **av)
 		if (cmd_len >= 1)
 		{
 			free_used_data(data);
-			writechar(10);
+			/* writechar(10); */
 		}
 		data->cmd_count++;
 	}
