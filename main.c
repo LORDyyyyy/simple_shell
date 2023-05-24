@@ -100,7 +100,7 @@ void shell_loop(data_t *data, int ac, char **av)
 				exit(0);
 			}
 			clear_getline(data->get_cmd);
-			if (!(_strcmp(data->get_cmd, "exit")))
+			if ((_strstr(data->get_cmd, "exit")) != NULL)
 			{
 				free_data(data);
 				writechar(BUF_FLUSH);

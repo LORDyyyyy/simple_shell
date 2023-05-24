@@ -121,6 +121,7 @@ char *_strcpy(char *dest, char *src);
 char *_strdup(char *str);
 int _strncmp(char *string1, char *string2, int number);
 int check_space(char *str);
+char *_strstr(char *haystack, char *needle);
 /*		end help_string.c		*/
 /*----------------------------------------------*/
 
