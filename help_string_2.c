@@ -56,3 +56,26 @@ char *_strdup(char *str)
 	str_copy[j] = '\0';
 	return (str_copy);
 }
+
+/**
+ * _strncmp - compares two strings
+ * @string1: first string
+ * @string2: second string
+ * @number: no. of chars to be compared
+ *
+ * Return: 1 if str1 = str2, 0 otherwise
+ */
+int _strncmp(char *string1, char *string2, int number)
+{
+	int iterator;
+
+	if (string1 == NULL || string2 == NULL)
+		return (0);
+
+	for (iterator = 0; iterator < number ; iterator++)
+	{
+		if (string1[iterator] != string2[iterator])
+			return (0);
+	}
+	return (1);
+}

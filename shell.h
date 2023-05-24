@@ -72,6 +72,8 @@ void filter_cmd(data_t *data);
 /*		get command location		*/
 char *get_location(data_t *data);
 
+char *_getenv(char *key, data_t *data);
+
 /*		end paths.c			*/
 /*----------------------------------------------*/
 
@@ -117,7 +119,7 @@ char *full_strdup(char *str);
 /*		start help_strint_2.c		*/
 char *_strcpy(char *dest, char *src);
 char *_strdup(char *str);
-
+int _strncmp(char *string1, char *string2, int number);
 /*		end help_string.c		*/
 /*----------------------------------------------*/
 

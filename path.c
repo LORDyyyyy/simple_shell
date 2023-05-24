@@ -48,7 +48,7 @@ char *get_location(data_t *data)
 	int cmd_len, dir_len;
 	struct stat sfile;
 
-	path = getenv("PATH");
+	path = _getenv("PATH", data);
 	if (path)
 	{
 		path_copy = full_strdup(path);
@@ -85,7 +85,27 @@ char *get_location(data_t *data)
 }
 
 
+/**
+ * _getenv - getting the path envirment variable from
+ * data->env list
+ * @key: var name "PATH"
+ * @data: data_t struct that holds everything
+ *
+ * Return: the path var value
+ *
+ */
 
+char *_getenv(char *key, data_t *data)
+{
+	int i, key_len = 0;
 
+	if (key == NULL || data->env == NULL)
+		return (NULL);
 
-
+	key_len = _strlen(key);
+	for (i = 0; data->env[i]; i++)
+		if (_strncmp(key, data->env[i], key_len) &&
+		 data->env[i][key_len] == '=')
+			return (data->env[i] + key_len + 1);
+	return (NULL);
+}
