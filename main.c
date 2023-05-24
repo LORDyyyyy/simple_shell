@@ -98,14 +98,14 @@ void shell_loop(data_t *data, int ac, char **av)
 			if (error_code == -1 ||  error_code == EOF)
 			{
 				free_data(data);
-				exit(1);
+				exit(0);
 			}
 			clear_getline(data->get_cmd);
 			if (!(_strcmp(data->get_cmd, "exit")))
 			{
 				free_data(data);
 				writechar(BUF_FLUSH);
-				exit(1);
+				exit(0);
 			}
 			if (check_space(data->get_cmd))
 			{
