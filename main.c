@@ -84,9 +84,8 @@ char *clear_getline(char *str)
  */
 void shell_loop(data_t *data, int ac, char **av)
 {
-	int error_code = 0, cmd_len;
+	int error_code = 0, cmd_len, acc = ac;
 	size_t BUF = 1024;
-	int acc = ac;
 
 	while (1)
 	{
@@ -122,13 +121,9 @@ void shell_loop(data_t *data, int ac, char **av)
 		cmd_len = _strlen(data->cmd[0]);
 		exe(data);
 		if (cmd_len >= 1)
-		{
 			free_used_data(data);
-			/* writechar(10); */
-		}
 		data->cmd_count++;
 	}
-	writechar(BUF_FLUSH);
 }
 
 /**
